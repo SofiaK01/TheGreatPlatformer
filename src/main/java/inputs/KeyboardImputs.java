@@ -1,11 +1,14 @@
 package inputs;
 
+import main.GamePanel;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyboardImputs implements KeyListener {
-    public KeyboardImputs() {
-
+    private GamePanel gamePanel;
+    public KeyboardImputs(GamePanel gamePanel) {
+this.gamePanel = gamePanel;
     }
 
     @Override
@@ -18,13 +21,19 @@ public class KeyboardImputs implements KeyListener {
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W :
-                System.out.println("UP");
+                gamePanel.changeY(-5);
                 break;
             case KeyEvent.VK_UP:
                 System.out.println("UP");
                 break;
             case KeyEvent.VK_S:
-                System.out.println("DOWN");
+                gamePanel.changeY(5);
+                break;
+            case KeyEvent.VK_A:
+                gamePanel.changeX(-5);
+                break;
+            case KeyEvent.VK_D:
+                gamePanel.changeX(5);
                 break;
         }
     }
