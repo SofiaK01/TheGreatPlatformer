@@ -3,59 +3,44 @@ package main;
 import inputs.KeyboardImputs;
 import inputs.MouseInputs;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+;import java.awt.*;
+
+import static main.Game.GAME_HEIGHT;
+import static main.Game.GAME_WIDTH;
+
 
 public class GamePanel extends JPanel {
     private int x = 100, y = 100;
 
-    private BufferedImage image, subImage;
-
     private MouseInputs mouseInputs = new MouseInputs();
+    private Game game;
 
-    public GamePanel() {
-        importImage();
+    public GamePanel(Game game) {
+        this.game = game;
         setPanelSize();
         addKeyListener(new KeyboardImputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-
-    }
-
-    private void importImage() {
-        InputStream inputStream = getClass().getResourceAsStream("/player_sprites.png");
-        try {
-            image = ImageIO.read(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void setPanelSize() {
-        Dimension size = new Dimension(1200, 800);
-        setMinimumSize(size);
+        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
+        System.out.println(GAME_WIDTH+" "+ GAME_HEIGHT);
         setPreferredSize(size);
     }
 
+    public void updateGame() {
+
+    }
+
+
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        subImage = image.getSubimage(1 * 64, 1 * 40, 64, 40);
-        graphics.drawImage(subImage, x, y, 128, 80, null);
-
+        game.render(graphics);
     }
 
-    public void changeX(int value) {
-        this.x += value;
-
+    public Game getGame() {
+        return game;
     }
-
-    public void changeY(int value) {
-        this.y += value;
-
-    }
-
 }
