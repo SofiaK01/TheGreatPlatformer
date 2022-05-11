@@ -94,8 +94,9 @@ public class Game implements Runnable {
     }
 
     public void render(Graphics graphics) {
-        player.render(graphics);
+
         levelManager.draw(graphics);
+        player.render(graphics);
     }
 
     private void update() {

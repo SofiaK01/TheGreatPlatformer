@@ -6,16 +6,19 @@ import utils.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static main.Game.TILES_IN_HEIGHT;
+import static main.Game.TILES_SIZE;
 import static utils.LoadSave.LEVEL_ATLAS;
 
 public class LevelManager {
     private Game game;
     private BufferedImage[] levelSprite;
+    private Level levelOne;
 
     public LevelManager(Game game) {
         this.game = game;
-        
         importOutsideSprites();
+        levelOne = new Level(LoadSave.getLevelData());
 
     }
 
@@ -33,7 +36,14 @@ public class LevelManager {
     }
 
     public void draw(Graphics graphics) {
-        graphics.drawImage(levelSprite[2], 0, 0, null);
+        for (int j = 0; j < Game.TILES_IN_HEIGHT; j++) {
+            for (int i = 0; i < Game.TILES_IN_WIDTH; i++) {
+                int index = levelOne.getSpriteIndex(i, j);
+                graphics.drawImage(levelSprite[index], i * TILES_SIZE, j * TILES_SIZE, TILES_SIZE, TILES_SIZE, null);
+            }
+        }
+
+
     }
 
     public void update() {
